@@ -40,13 +40,6 @@ const LOGO_SVG = `<svg width="300" height="100" xmlns="http://www.w3.org/2000/sv
   <text x="64%" y="50%" fill="#78ce23" font-size="42" text-anchor="middle" font-family="Arial" filter="url(#neonGlow)">.cc</text>
 </svg>`;
 
-// Pinata için API bilgileri
-// const PINATA_API_KEY = '...';
-// const PINATA_SECRET_KEY = '...';
-
-// IPFS ve Pinata ile ilgili kodları kaldır
-// const FIXED_TOKEN_URI = "ipfs://QmYourIPFSHash"; // Önceden yüklenmiş metadata'nın IPFS hash'i
-
 // Yüklediğiniz metadata'nın IPFS hash'ini buraya yazın
 const FIXED_TOKEN_URI = "ipfs://bafkreico2c2uj4n4uklwk2aqrhyddrfbt6jxkhzewvmjmwij5kmydnmhca"; // Buraya kopyaladığınız CID'yi yazın
 
@@ -129,7 +122,7 @@ const App = () => {
       const address = await signer.getAddress();
       
       const tx = await nftContract.mintNFT(address, FIXED_TOKEN_URI, {
-        gasLimit: 500000
+        gasLimit: 3000000
       });
       
       setMessage("Transaction sent, waiting for confirmation...");
@@ -155,7 +148,9 @@ const App = () => {
     setDeploying(true);
     setMessage("Deploying empty contract...");
     try {
-      const tx = await factoryContract.deployEmptyContract();
+      const tx = await factoryContract.deployEmptyContract({
+        gasLimit: 3000000
+      });
       await tx.wait();
       setMessage("Empty Contract Successfully Deployed!");
     } catch (error) {
